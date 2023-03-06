@@ -19,3 +19,7 @@ clean:
 	rm -rf $(BUILDDIR)/
 
 .PHONY: all $(BUILD_TARGETS) clean
+
+lint:
+	golangci-lint run --tests=false
+	find . -name '*.go' -type f -not -path "*.git*" | xargs gofmt -d -s
