@@ -23,3 +23,7 @@ clean:
 lint:
 	golangci-lint run --tests=false
 	find . -name '*.go' -type f -not -path "*.git*" | xargs gofmt -d -s
+
+format:
+	find . -name '*.go' -type f -not -path "*.git*" | xargs gofmt -w -s
+	find . -name '*.go' -type f -not -path "*.git*" | xargs goimports -w -local github.com/

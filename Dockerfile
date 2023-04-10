@@ -1,4 +1,4 @@
-FROM burntnetwork/burnt:sha-c9864a6 AS burntd
+FROM 385156030167.dkr.ecr.us-east-1.amazonaws.com/burnt/xiond:sha-2722f0f AS xiond
 
 FROM golang:alpine AS builder
   WORKDIR /src/app/
@@ -9,10 +9,10 @@ FROM golang:alpine AS builder
   RUN CGO_ENABLED=0 go build -o=/usr/local/bin/faucet ./cmd/faucet
 
 FROM alpine
-  ENV HOME=/home/burntd/.burnt
+  ENV HOME=/home/xiond/.xiond
 
   COPY --from=builder /usr/local/bin/faucet /usr/local/bin/faucet
-  COPY --from=burntd /usr/bin/burntd /usr/local/bin/burntd
+  COPY --from=xiond /usr/bin/xiond /usr/local/bin/xiond
 
   RUN set -eux \
     && apk add --no-cache \
@@ -20,17 +20,17 @@ FROM alpine
       tini
 
   RUN set -euxo pipefail \
-    && addgroup -S burntd \
+    && addgroup -S xiond \
     && adduser \
        --disabled-password \
-       --gecos burntd \
-       --ingroup burntd \
-       burntd
+       --gecos xiond \
+       --ingroup xiond \
+       xiond
 
   RUN set -eux \
-    && chown -R burntd:burntd /home/burntd
+    && chown -R xiond:xiond /home/xiond
 
-  USER burntd:burntd
+  USER xiond:xiond
   WORKDIR $HOME
 
   COPY entrypoint.sh /entrypoint.sh
