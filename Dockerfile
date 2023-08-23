@@ -1,4 +1,4 @@
-FROM 385156030167.dkr.ecr.us-east-1.amazonaws.com/burnt/xiond:sha-2722f0f AS xiond
+FROM 385156030167.dkr.ecr.us-east-1.amazonaws.com/burnt/xiond:sha-79f0d91 AS xiond
 
 FROM golang:alpine AS builder
   WORKDIR /src/app/
