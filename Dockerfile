@@ -9,6 +9,8 @@ FROM golang:alpine AS builder
   RUN CGO_ENABLED=0 go build -o=/usr/local/bin/faucet ./cmd/faucet
 
 FROM alpine
+  EXPOSE 8080
+
   ENV HOME=/home/xiond/.xiond
 
   COPY --from=builder /usr/local/bin/faucet /usr/local/bin/faucet
